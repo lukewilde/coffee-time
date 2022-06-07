@@ -1,0 +1,16 @@
+services:
+  app:
+    build:
+      context: .
+      target: ${NODE_ENV}
+      args:
+        - NODE_ENV=${NODE_ENV}
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - PORT=${PORT}
+    ports:
+      - "3000:${PORT}"
+      - "9229:9229"
+    volumes:
+      - .:/node/app
+      - /node/app/node_modules
