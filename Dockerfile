@@ -17,12 +17,13 @@ COPY --chown=node:node package*.json ./
 
 RUN \
   NODE_ENV=development && \
-  npm install && \
+  npm ci && \
   npm cache clean --force
 
 WORKDIR /node/app
+RUN mkdir log
 
-CMD [ "nodemon", "./index.js" ]
+CMD [ "nodemon" ]
 
 # Source stage
 FROM base AS source
@@ -60,4 +61,4 @@ ENV PORT=3000
 
 EXPOSE $PORT
 
-CMD [ "node", "./index.js" ]
+CMD [ "node", "bin/www" ]

@@ -1,0 +1,17 @@
+#!/usr/bin/env node
+const log4js = require('log4js');
+
+log4js.configure('./src/config/log4js.json');
+
+const config = require('../src/config');
+const app = require('../src/index');
+
+const log = log4js.getLogger();
+
+// Configure the server settings
+app.set('env', config.get('env'));
+app.set('port', config.get('port'));
+
+app.listen(app.get('port'), () => {
+  log.info(`Server started: http://localhost:${app.get('port')}`);
+});

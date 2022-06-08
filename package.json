@@ -2,7 +2,7 @@
   "name": "coffee-time",
   "version": "1.0.0",
   "description": "",
-  "main": "src/index.js",
+  "main": "bin/www",
   "scripts": {
     "test": "npm run test",
     "dev": "docker compose up"
@@ -10,8 +10,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.20.0",
     "convict": "^6.2.3",
-    "express": "^4.18.1"
+    "express": "^4.18.1",
+    "log4js": "^6.5.2"
   },
   "devDependencies": {
     "eslint": "^8.17.0",
