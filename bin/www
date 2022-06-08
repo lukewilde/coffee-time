@@ -3,11 +3,9 @@ const config = require('../config/convict');
 const app = require('../index');
 const logger = require('../util/logger');
 
-// Configure the server settings
-app.set('env', config.get('env'));
-app.set('port', config.get('port'));
-
 logger.info('Server starting...');
-app.listen(app.get('port'), () => {
-  logger.info(`Server listening: http://localhost:${app.get('port')}`);
+const port = config.get('port');
+
+app.listen(port, () => {
+  logger.info(`Server listening: http://localhost:${port}`);
 });
