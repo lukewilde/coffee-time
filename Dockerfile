@@ -1,6 +1,8 @@
 # Base stage
 FROM node:16.15.1-alpine3.15 as base
 
+RUN mkdir /var/log/coffee-time
+RUN chown node:node /var/log/coffee-time
 WORKDIR /node
 RUN chown node:node /node
 USER node
@@ -22,7 +24,6 @@ RUN \
   npm cache clean --force
 
 WORKDIR /node/app
-RUN mkdir log
 
 CMD [ "nodemon" ]
 

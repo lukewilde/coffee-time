@@ -7,6 +7,6 @@ const logger = require('../src/util/logger');
 app.set('env', config.get('env'));
 app.set('port', config.get('port'));
 
-app.listen(app.get('port'), () => {
+const server = app.listen(app.get('port'), () => {
   logger.info(`Server listening: http://localhost:${app.get('port')}`);
 });

@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bunyan-debug-stream": "^3.0.2",
     "body-parser": "^1.20.0",
     "bunyan": "^1.8.15",
     "convict": "^6.2.3",
@@ -23,6 +24,9 @@
     "supertest": "^6.2.3"
   },
   "nodemonConfig": {
-    "watch": ["./bin/www", "./src/**/*"]
+    "watch": [
+      "./bin/www",
+      "./src/**/*"
+    ]
   }
 }

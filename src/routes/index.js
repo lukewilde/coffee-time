@@ -5,7 +5,7 @@ const router = express.Router();
 
 // Define the home page route
 router.get('/', (req, res) => {
-  logger.info(req);
+  logger.info({ req });
   res.send('home page');
 });
 
