@@ -1,12 +1,13 @@
 #!/usr/bin/env node
-const config = require('../src/config/convict');
-const app = require('../src/index');
-const logger = require('../src/util/logger');
+const config = require('../config/convict');
+const app = require('../index');
+const logger = require('../util/logger');
 
 // Configure the server settings
 app.set('env', config.get('env'));
 app.set('port', config.get('port'));
 
-const server = app.listen(app.get('port'), () => {
+logger.info('Server starting...');
+app.listen(app.get('port'), () => {
   logger.info(`Server listening: http://localhost:${app.get('port')}`);
 });

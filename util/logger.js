@@ -20,9 +20,10 @@ const logger = bunyan.createLogger({
       path: '/var/log/coffee-time/debug.log',
       period: '1d',
       count: 3,
-    }],
+    },
+  ],
 });
 
-logger.info(`Setting log level to ${config.get('logLevel')}`);
+logger.info(`Log level set to '${config.get('logLevel')}'`);
 
 module.exports = logger;

@@ -25,7 +25,7 @@ RUN \
 
 WORKDIR /node/app
 
-CMD [ "nodemon" ]
+CMD [ "nodemon", "bin/www" ]
 
 # Source stage
 FROM base AS source
