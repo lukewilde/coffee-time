@@ -9,6 +9,13 @@ const config = convict({
     nullable: false,
     env: 'NODE_ENV',
   },
+  logLevel: {
+    doc: 'The bunyan logging level.',
+    format: ['fatal', 'error', 'warn', 'info', 'debug', 'trace'],
+    default: null,
+    nullable: false,
+    env: 'LOG_LEVEL',
+  },
   port: {
     doc: 'The port to bind.',
     format: 'port',

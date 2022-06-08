@@ -10,6 +10,7 @@ FROM base AS development
 
 ENV PORT=${PORT}
 ENV NODE_ENV=${NODE_ENV}
+ENV LOG_LEVEL=debug
 ENV PATH /node/node_modules/.bin:$PATH
 EXPOSE $PORT 9229
 
@@ -30,6 +31,7 @@ FROM base AS source
 
 ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
+ENV LOG_LEVEL=info
 
 WORKDIR /node
 COPY --chown=node:node package*.json ./
@@ -45,6 +47,7 @@ FROM source AS test
 
 ARG NODE_ENV=development
 ENV NODE_ENV=${NODE_ENV}
+ENV LOG_LEVEL=debug
 ENV PATH /node/node_modules/.bin:$PATH
 
 COPY --chown=node:node --from=development /node/node_modules /node/node_modules
@@ -56,6 +59,7 @@ FROM source AS production
 
 ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
+ENV LOG_LEVEL=info
 ENV PATH /node/node_modules/.bin:$PATH
 ENV PORT=3000
 

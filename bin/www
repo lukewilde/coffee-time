@@ -1,17 +1,12 @@
 #!/usr/bin/env node
-const log4js = require('log4js');
-
-log4js.configure('./src/config/log4js.json');
-
 const config = require('../src/config/convict');
 const app = require('../src/index');
-
-const log = log4js.getLogger();
+const logger = require('../src/util/logger');
 
 // Configure the server settings
 app.set('env', config.get('env'));
 app.set('port', config.get('port'));
 
 app.listen(app.get('port'), () => {
-  log.info(`Server started: http://localhost:${app.get('port')}`);
+  logger.info(`Server listening: http://localhost:${app.get('port')}`);
 });
