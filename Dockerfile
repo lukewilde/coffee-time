@@ -18,14 +18,11 @@ EXPOSE $PORT 9229
 
 COPY --chown=node:node package*.json ./
 
-RUN \
-  NODE_ENV=development && \
-  npm ci && \
-  npm cache clean --force
+RUN npm ci && npm cache clean --force
 
 WORKDIR /node/app
 
-CMD [ "nodemon", "bin/www" ]
+CMD nodemon bin/www | bunyan
 
 # Source stage
 FROM base AS source
