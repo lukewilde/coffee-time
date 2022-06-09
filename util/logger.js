@@ -1,13 +1,16 @@
 const bunyan = require('bunyan');
+const bunyanformat = require('bunyan-format');
 const config = require('../config/convict');
 
+const formatOut = bunyanformat({ outputMode: 'short' });
+
 const logger = bunyan.createLogger({
-  name: 'coffee-time',
+  name: 'webserver',
   level: config.get('logLevel'),
   src: config.get('env') === 'development',
   serializers: bunyan.stdSerializers,
   streams: [
-    { stream: process.stdout },
+    { stream: formatOut },
     {
       type: 'rotating-file',
       path: '/var/log/coffee-time/debug.log',

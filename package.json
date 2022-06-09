@@ -12,6 +12,7 @@
   "dependencies": {
     "body-parser": "^1.20.0",
     "bunyan": "^1.8.15",
+    "bunyan-format": "^0.2.1",
     "convict": "^6.2.3",
     "express": "^4.18.1"
   },
