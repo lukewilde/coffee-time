@@ -1,5 +1,6 @@
 services:
   app:
+    container_name: webserver
     build:
       context: .
       target: ${NODE_ENV}

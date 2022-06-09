@@ -4,8 +4,8 @@
   "description": "",
   "main": "bin/www",
   "scripts": {
-    "test": "docker exec -e NODE_ENV=test -e LOG_LEVEL=error coffee-time-app-1 mocha ./test/** --reporter spec",
-    "dev": "docker compose up"
+    "test": "NODE_ENV=test LOG_LEVEL=error mocha ./test/** --reporter spec",
+    "dev": "nodemon bin/www | bunyan"
   },
   "author": "",
   "license": "ISC",
