@@ -4,7 +4,7 @@
   "description": "",
   "main": "bin/www",
   "scripts": {
-    "test": "npm run test",
+    "test": "docker exec -e NODE_ENV=test -e LOG_LEVEL=error coffee-time-app-1 mocha ./test/** --reporter spec",
     "dev": "docker compose up"
   },
   "author": "",
@@ -16,9 +16,11 @@
     "express": "^4.18.1"
   },
   "devDependencies": {
+    "chai": "^4.3.6",
     "eslint": "^8.17.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.26.0",
+    "mocha": "^10.0.0",
     "nodemon": "^2.0.16",
     "supertest": "^6.2.3"
   },
