@@ -1,6 +1,5 @@
 const convict = require('convict');
 
-// Define a schema
 const config = convict({
   env: {
     doc: 'The application environment.',
