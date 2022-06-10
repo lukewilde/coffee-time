@@ -26,12 +26,17 @@ const config = convict({
     host: {
       doc: 'Database host name/IP',
       format: '*',
-      default: 'server1.dev.test',
+      default: 'mongo',
     },
     name: {
       doc: 'Database name',
       format: String,
-      default: 'users',
+      default: 'coffee-time',
+    },
+    port: {
+      doc: 'Database port',
+      format: 'port',
+      default: 27017,
     },
   },
 });
