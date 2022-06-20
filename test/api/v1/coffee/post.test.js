@@ -91,6 +91,32 @@ describe('POST users', () => {
     });
   });
 
+  describe('Country code', () => {
+    it('should be required', (done) => {
+      request(app)
+        .post('/api/v1/coffee')
+        .send(fixtures.unknownLocationCoffee)
+        .expect(400)
+        .then((res) => {
+          expect(res.body.message).to.be.eql('Coffee validation failed: countryOfOrigin: Path `countryOfOrigin` is required.');
+          done();
+        })
+        .catch((err) => done(err));
+    });
+
+    it('should only accept ISO 3166-1 alpha-2 codes', (done) => {
+      request(app)
+        .post('/api/v1/coffee')
+        .send(fixtures.alienCoffee)
+        .expect(400)
+        .then((res) => {
+          expect(res.body.message).to.be.eql('Coffee validation failed: countryOfOrigin: Validator failed for path `countryOfOrigin` with value `N/A`');
+          done();
+        })
+        .catch((err) => done(err));
+    });
+  });
+
   describe('Date Created', () => {
     it('should default to todays date', (done) => {
       request(app)
