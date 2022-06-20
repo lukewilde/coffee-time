@@ -32,6 +32,7 @@ const config = convict({
       doc: 'Database name',
       format: String,
       default: 'coffee-time',
+      env: 'DB_NAME',
     },
     port: {
       doc: 'Database port',

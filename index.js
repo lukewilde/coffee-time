@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const crypto = require('crypto');
-const { MongoClient } = require('mongodb');
+const mongoose = require('mongoose');
 const logger = require('./util/logger');
 const routes = require('./routes');
 const config = require('./config/convict');
@@ -19,11 +19,11 @@ app.use((req, res, next) => {
 
 const { host, port, name } = config.get('db');
 
-MongoClient.connect(`mongodb://${host}:${port}/${name}`, (err, db) => {
-  if (!err) {
-    console.log('We are connected');
-  }
-});
+async function main() {
+  await mongoose.connect(`mongodb://${host}:${port}/${name}`);
+}
+
+main().catch((error) => logger.error(error));
 
 app.use('/', routes);
 
