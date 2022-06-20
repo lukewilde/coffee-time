@@ -1,14 +1,19 @@
 const mongoose = require('mongoose');
+const uniqueValidator = require('mongoose-unique-validator');
 
 const { Schema } = mongoose;
 
 const coffeeSchema = new Schema({
-  name: { type: String, required: true },
-  price: { Number, min: [0, 'Negatigve prices are invalid'] },
+  name: { type: String, required: true, unique: true },
+  price: { type: Number, min: 0, required: true },
   description: { type: String, required: true },
   countryOfOrigin: { type: String, required: true },
   decaf: { type: Boolean, default: false },
   dateCreated: { type: Date, default: Date.now },
 });
 
-module.exports = mongoose.model('Coffee', coffeeSchema);
+coffeeSchema.plugin(uniqueValidator);
+
+const CoffeeModel = mongoose.model('Coffee', coffeeSchema);
+
+module.exports = CoffeeModel;
