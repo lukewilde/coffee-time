@@ -3,35 +3,21 @@
 const Coffee = require('../../../models/coffee');
 
 function getCoffees(req, res) {
-  const query = Coffee.find({});
-  query.exec((error, books) => {
-    if (error) {
-      res.send(error);
-    }
-
-    res.json(books);
-  });
+  Coffee.find({}).exec()
+    .then((books) => res.json(books))
+    .catch((error) => res.send(error));
 }
 
 function getCoffee(req, res) {
-  Coffee.findById(req.params.id, (error, coffee) => {
-    if (error) {
-      res.status(404).send(error);
-    }
-
-    res.json(coffee);
-  });
+  Coffee.findById(req.params.id)
+    .then((coffee) => res.json(coffee))
+    .catch((error) => res.status(404).send(error));
 }
 
 function postCoffee(req, res) {
-  const newCoffee = new Coffee(req.body);
-  newCoffee.save((error, coffee) => {
-    if (error) {
-      res.status(400).send(error);
-    } else {
-      res.status(201).json(coffee);
-    }
-  });
+  new Coffee(req.body).save()
+    .then((coffee) => res.status(201).json(coffee))
+    .catch((error) => res.status(400).send(error));
 }
 
 module.exports = { getCoffee, getCoffees, postCoffee };
