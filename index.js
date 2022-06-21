@@ -29,4 +29,9 @@ app.use((req, res, next) => {
 app.use('/', frontEndRoutes);
 app.use('/api/v1', apiV1Routes);
 
+app.use((err, req, res, next) => {
+
+  // TODO: log errors & format mongoose errors?
+});
+
 module.exports = app;

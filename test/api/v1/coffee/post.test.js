@@ -39,17 +39,16 @@ describe('POST users', () => {
     });
 
     it("shouldn't accept a coffee name that already exists in the database", (done) => {
-      request(app).post('/api/v1/coffee').send(fixtures.normalCoffee).then(() => {
-        request(app)
+      new CoffeeModel(fixtures.normalCoffee).save()
+        .then(() => request(app)
           .post('/api/v1/coffee')
           .send(fixtures.normalCoffee)
           .expect(400)
           .then((res) => {
             expect(res.body.message).to.be.eql('Coffee validation failed: name: Error, expected `name` to be unique. Value: `Normal coffee`');
             done();
-          })
-          .catch((err) => done(err));
-      });
+          }))
+        .catch((err) => done(err));
     });
   });
 

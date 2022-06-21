@@ -2,14 +2,24 @@
 
 const Coffee = require('../../../models/coffee');
 
-function getCoffee(req, res) {
+function getCoffees(req, res) {
   const query = Coffee.find({});
   query.exec((error, books) => {
     if (error) {
       res.send(error);
-    } else {
-      res.json(books);
     }
+
+    res.json(books);
+  });
+}
+
+function getCoffee(req, res) {
+  Coffee.findById(req.params.id, (error, coffee) => {
+    if (error) {
+      res.status(404).send(error);
+    }
+
+    res.json(coffee);
   });
 }
 
@@ -24,4 +34,4 @@ function postCoffee(req, res) {
   });
 }
 
-module.exports = { getCoffee, postCoffee };
+module.exports = { getCoffee, getCoffees, postCoffee };
