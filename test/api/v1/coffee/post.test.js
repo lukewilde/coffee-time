@@ -137,4 +137,22 @@ describe('POST users', () => {
         .catch((err) => done(err));
     });
   });
+
+  describe('Multiple errors', () => {
+    it('should be reported', (done) => {
+      request(app)
+        .post('/api/v1/coffee')
+        .send(fixtures.freeCoffeeFromNoWhere)
+        .expect(400)
+        .then((res) => {
+          expect(res.body.summary).to.be.eql('Coffee validation failed: countryOfOrigin: Path `countryOfOrigin` is required., price: Path `price` is required.');
+          expect(res.body.errors[0].field).to.be.eql('countryOfOrigin');
+          expect(res.body.errors[0].message).to.be.eql('Path `countryOfOrigin` is required.');
+          expect(res.body.errors[1].field).to.be.eql('price');
+          expect(res.body.errors[1].message).to.be.eql('Path `price` is required.');
+          done();
+        })
+        .catch((err) => done(err));
+    });
+  });
 });

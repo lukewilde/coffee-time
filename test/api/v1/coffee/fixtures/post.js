@@ -26,6 +26,10 @@ module.exports = {
     description: 'tasty coffee',
     countryOfOrigin: 'GB',
   },
+  freeCoffeeFromNoWhere: {
+    name: 'Free coffee',
+    description: 'tasty coffee',
+  },
   negativePriceCoffee: {
     price: -3.50,
     description: 'tasty coffee',
