@@ -17,4 +17,6 @@ after((done) => {
   });
 });
 
+mongoose.set('autoIndex', false);
+
 module.exports = app;
