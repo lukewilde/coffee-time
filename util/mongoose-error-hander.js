@@ -12,7 +12,7 @@ const mongoseErrorHandler = (error, req, res, next) => {
     return next();
   }
 
-  logger.error('Mongoose error handler:', error);
+  logger.error('Mongoose error middleware:', error);
 
   // return res.send(error);
   let prettyErrors;
