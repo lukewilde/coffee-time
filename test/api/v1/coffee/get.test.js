@@ -30,10 +30,13 @@ describe('GET users', () => {
           .get('/api/v1/coffee/')
           .expect(200)
           .then((res) => {
-            savedCoffees.forEach((coffee, i) => {
-              expect(res.body[i].name).to.eql(coffee.name);
-              expect(res.body[i].countryOfOrigin).to.eql(coffee.countryOfOrigin);
-              expect(res.body[i].price).to.eql(coffee.price);
+            expect(res.body.length).to.equal(coffees.length);
+
+            savedCoffees.forEach((coffee) => {
+              const sentCoffee = res.body.find((newCoffee) => newCoffee.name === coffee.name);
+              expect(sentCoffee.description).to.eql(coffee.description);
+              expect(sentCoffee.countryOfOrigin).to.eql(coffee.countryOfOrigin);
+              expect(sentCoffee.price).to.eql(coffee.price);
             });
             done();
           })).catch((error) => done(error));
@@ -57,7 +60,7 @@ describe('GET users', () => {
 
     it('should 404 if none is found', (done) => {
       request(app)
-        .get(`/api/v1/coffee/${fixtures.unknownCoffeeId}`)
+        .get(`/api/v1/coffee/${fixtures.unknownCoffeeId.id}`)
         .expect(404)
         .then(() => {
           done();

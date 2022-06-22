@@ -17,7 +17,7 @@ module.exports = {
     countryOfOrigin: 'US',
     price: 3.53,
   },
-  invalidCoffee: {
-    id: 'fish-legs',
-  }
+  unknownCoffeeId: {
+    id: '62b062b1b7039be24ab1a82d',
+  },
 };

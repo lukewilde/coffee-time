@@ -32,7 +32,8 @@ describe('POST users', () => {
         .send(fixtures.anonymousCoffee)
         .expect(400)
         .then((res) => {
-          expect(res.body.message).to.be.eql('Coffee validation failed: name: Path `name` is required.');
+          expect(res.body.errors[0].field).to.be.eql('name');
+          expect(res.body.errors[0].message).to.be.eql('Path `name` is required.');
           done();
         })
         .catch((err) => done(err));
@@ -45,7 +46,8 @@ describe('POST users', () => {
           .send(fixtures.normalCoffee)
           .expect(400)
           .then((res) => {
-            expect(res.body.message).to.be.eql('Coffee validation failed: name: Error, expected `name` to be unique. Value: `Normal coffee`');
+            expect(res.body.errors[0].field).to.be.eql('name');
+            expect(res.body.errors[0].message).to.be.eql('Error, expected `name` to be unique. Value: `Normal coffee`');
             done();
           }))
         .catch((err) => done(err));
@@ -59,7 +61,8 @@ describe('POST users', () => {
         .send(fixtures.freeCoffee)
         .expect(400)
         .then((res) => {
-          expect(res.body.message).to.be.eql('Coffee validation failed: price: Path `price` is required.');
+          expect(res.body.errors[0].field).to.be.eql('price');
+          expect(res.body.errors[0].message).to.be.eql('Path `price` is required.');
           done();
         })
         .catch((err) => done(err));
@@ -71,7 +74,8 @@ describe('POST users', () => {
         .send(fixtures.negativePriceCoffee)
         .expect(400)
         .then((res) => {
-          expect(res.body.message).to.be.eql('Coffee validation failed: price: Path `price` (-3.5) is less than minimum allowed value (0).');
+          expect(res.body.errors[0].field).to.be.eql('price');
+          expect(res.body.errors[0].message).to.be.eql('Path `price` (-3.5) is less than minimum allowed value (0).');
           done();
         })
         .catch((err) => done(err));
@@ -83,7 +87,8 @@ describe('POST users', () => {
         .send(fixtures.stringPriceCoffee)
         .expect(400)
         .then((res) => {
-          expect(res.body.message).to.be.eql('Coffee validation failed: price: Cast to Number failed for value "tree fiddy" (type string) at path "price"');
+          expect(res.body.errors[0].field).to.be.eql('price');
+          expect(res.body.errors[0].message).to.be.eql('Cast to Number failed for value "tree fiddy" (type string) at path "price"');
           done();
         })
         .catch((err) => done(err));
@@ -97,7 +102,8 @@ describe('POST users', () => {
         .send(fixtures.unknownLocationCoffee)
         .expect(400)
         .then((res) => {
-          expect(res.body.message).to.be.eql('Coffee validation failed: countryOfOrigin: Path `countryOfOrigin` is required.');
+          expect(res.body.errors[0].field).to.be.eql('countryOfOrigin');
+          expect(res.body.errors[0].message).to.be.eql('Path `countryOfOrigin` is required.');
           done();
         })
         .catch((err) => done(err));
@@ -109,7 +115,8 @@ describe('POST users', () => {
         .send(fixtures.alienCoffee)
         .expect(400)
         .then((res) => {
-          expect(res.body.message).to.be.eql('Coffee validation failed: countryOfOrigin: Validator failed for path `countryOfOrigin` with value `N/A`');
+          expect(res.body.errors[0].field).to.be.eql('countryOfOrigin');
+          expect(res.body.errors[0].message).to.be.eql('Validator failed for path `countryOfOrigin` with value `N/A`');
           done();
         })
         .catch((err) => done(err));

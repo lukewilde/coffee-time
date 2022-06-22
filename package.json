@@ -4,7 +4,7 @@
   "description": "",
   "main": "bin/www",
   "scripts": {
-    "test": "DB_NAME=coffee-time-test NODE_ENV=test LOG_LEVEL=error mocha --recursive",
+    "test": "DB_NAME=coffee-time-test NODE_ENV=test LOG_LEVEL=fatal mocha --recursive",
     "dev": "nodemon bin/www | bunyan"
   },
   "author": "",
