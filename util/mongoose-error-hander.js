@@ -1,5 +1,3 @@
-const logger = require('./logger');
-
 function formatValidationErrors(error) {
   return Object.entries(error.errors).map(([key, value]) => ({
     field: key,
@@ -7,14 +5,20 @@ function formatValidationErrors(error) {
   }));
 }
 
+function isMongooseError(error) {
+  const mongooseErrorNames = [
+    'ValidationError',
+    'CastError',
+  ];
+
+  return mongooseErrorNames.find((errorName) => errorName === error.name);
+}
+
 const mongoseErrorHandler = (error, req, res, next) => {
-  if (!error.errors && !error.name) {
-    return next();
+  if (res.headersSent || !isMongooseError(error)) {
+    return next(error);
   }
 
-  logger.error('Mongoose error middleware:', error);
-
-  // return res.send(error);
   let prettyErrors;
 
   if (error.name === 'CastError') {

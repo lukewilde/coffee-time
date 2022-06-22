@@ -7,6 +7,7 @@ const frontEndRoutes = require('./routes/front-end');
 const apiV1Routes = require('./routes/api/v1');
 const config = require('./config/convict');
 const mongooseErrorHandler = require('./util/mongoose-error-hander');
+const logUnhandledErrors = require('./util/log-unhandled-errors');
 
 const { host, port, name } = config.get('db');
 
@@ -30,5 +31,6 @@ app.use((req, res, next) => {
 app.use('/', frontEndRoutes);
 app.use('/api/v1', apiV1Routes);
 app.use(mongooseErrorHandler);
+app.use(logUnhandledErrors);
 
 module.exports = app;
