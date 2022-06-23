@@ -30,6 +30,28 @@ describe('DELETE users', () => {
         ).catch((error) => done(error));
     });
 
+    it('shouldn\'t remove other coffees', (done) => {
+      const coffeeFixtures = [fixtures.normalCoffee, fixtures.aCoffee, fixtures.bCoffee];
+      const coffeeModels = [];
+      const saveCoffees = coffeeFixtures.map((coffee) => {
+        const model = new CoffeeModel(coffee);
+        coffeeModels.push(model);
+        return model.save();
+      });
+
+      Promise.all(saveCoffees).then(() => {
+        request(app)
+          .delete(`/api/v1/coffee/${coffeeModels[1].id}`)
+          .expect(204)
+          .then(() => CoffeeModel.findById(coffeeModels[0].id).exec())
+          .then((undeletedCoffee) => expect(undeletedCoffee.name).to.equal(coffeeModels[0].name))
+          .then(() => CoffeeModel.findById(coffeeModels[2].id).exec())
+          .then((undeletedCoffee) => expect(undeletedCoffee.name).to.equal(coffeeModels[2].name))
+          .then(() => done())
+          .catch((error) => done(error));
+      }).catch((error) => done(error));
+    });
+
     it('should 404 if none is found', (done) => {
       request(app)
         .delete(`/api/v1/coffee/${fixtures.unknownCoffeeId.id}`)
