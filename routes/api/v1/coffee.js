@@ -11,11 +11,8 @@ function getCoffees(req, res, next) {
 function getCoffee(req, res, next) {
   Coffee.findById(req.params.id)
     .then((coffee) => {
-      if (coffee) {
-        res.json(coffee);
-      } else {
-        res.status(404).send();
-      }
+      if (!coffee) return res.status(404).send();
+      res.json(coffee);
     })
     .catch((error) => next(error));
 }
@@ -26,4 +23,12 @@ function postCoffee(req, res, next) {
     .catch((error) => next(error));
 }
 
-module.exports = { getCoffee, getCoffees, postCoffee };
+function deleteCoffee(req, res, next) {
+  Coffee.deleteOne({ _id: req.params.id })
+    .then(() => res.sendStatus(204))
+    .catch((error) => next(error));
+}
+
+module.exports = {
+  getCoffee, getCoffees, postCoffee, deleteCoffee,
+};
