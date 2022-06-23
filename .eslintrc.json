@@ -9,7 +9,16 @@
     "parserOptions": {
         "ecmaVersion": "latest"
     },
+    "plugins": ["promise"],
     "rules": {
-      "consistent-return": 0
+      "consistent-return": 0,
+      "function-paren-newline": "off",
+      "comma-dangle": ["error", {
+        "arrays": "always-multiline",
+        "objects": "always-multiline",
+        "imports": "always-multiline",
+        "exports": "always-multiline",
+        "functions": "never"
+      }]
     }
 }
