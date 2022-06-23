@@ -25,7 +25,10 @@ function postCoffee(req, res, next) {
 
 function deleteCoffee(req, res, next) {
   Coffee.deleteOne({ _id: req.params.id })
-    .then(() => res.sendStatus(204))
+    .then((result) => {
+      if (result.deletedCount !== 1) return res.sendStatus(404);
+      res.sendStatus(204);
+    })
     .catch((error) => next(error));
 }
 

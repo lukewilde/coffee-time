@@ -24,11 +24,10 @@ describe('DELETE users', () => {
         .then(() => request(app)
           .delete(`/api/v1/coffee/${coffeeModel.id}`)
           .expect(204)
-          .then(() => CoffeeModel.findById(coffeeModel.id).exec().then((deletedCoffee) => {
-            expect(deletedCoffee).to.equal(null);
-            done();
-          })))
-        .catch((error) => done(error));
+          .then(() => CoffeeModel.findById(coffeeModel.id).exec())
+          .then((deletedCoffee) => expect(deletedCoffee).to.equal(null))
+          .then(() => done())
+        ).catch((error) => done(error));
     });
 
     it('should 404 if none is found', (done) => {
