@@ -4,7 +4,7 @@ const Coffee = require('../../../models/coffee');
 
 function getCoffees(req, res, next) {
   Coffee.find({}).exec()
-    .then((books) => res.json(books))
+    .then((coffees) => res.json(coffees))
     .catch((error) => next(error));
 }
 
