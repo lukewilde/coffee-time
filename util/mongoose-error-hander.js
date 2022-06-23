@@ -11,7 +11,7 @@ function isMongooseError(error) {
     'CastError',
   ];
 
-  return mongooseErrorNames.find((errorName) => errorName === error.name);
+  return mongooseErrorNames.find((errorName) => errorName === error.name) !== undefined;
 }
 
 const mongoseErrorHandler = (error, req, res, next) => {
