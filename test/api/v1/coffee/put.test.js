@@ -8,9 +8,13 @@ describe('UPDATE users', () => {
   let coffeeModel;
 
   beforeEach((done) => {
-    CoffeeModel.deleteMany({}, done);
-    coffeeModel = new CoffeeModel(fixtures.normalCoffee);
-    coffeeModel.save(coffeeModel);
+    CoffeeModel.deleteMany({})
+      .then(() => {
+        coffeeModel = new CoffeeModel(fixtures.normalCoffee);
+        return coffeeModel.save();
+      })
+      .then(() => done())
+      .catch((error) => done(error));
   });
 
   it('should respond with the updated model', (done) => {
@@ -20,8 +24,8 @@ describe('UPDATE users', () => {
       .expect('Content-Type', /json/)
       .expect(200)
       .then((res) => {
-        res.body.should.be.a('object');
-        res.body.name.eql(fixtures.updatedCoffee.name);
+        expect(res.body).to.be.a('object');
+        expect(res.body.name).eql(fixtures.updatedCoffee.name);
         done();
       })
       .catch((err) => done(err));
@@ -31,14 +35,13 @@ describe('UPDATE users', () => {
     request(app)
       .put(`/api/v1/coffee/${coffeeModel.id}`)
       .send(fixtures.updatedCoffee)
-      .expect('Content-Type', /json/)
       .expect(200)
       .then((res) => {
-        res.body.should.be.a('object');
-        res.body.name.eql(fixtures.name.name);
-        res.body.description.eql(fixtures.description.name);
-        res.body.countryOfOrigin.eql(fixtures.countryOfOrigin.name);
-        res.body.price.eql(fixtures.price.name);
+        expect(res.body).to.be.a('object');
+        expect(res.body.name).eql(fixtures.updatedCoffee.name);
+        expect(res.body.description).eql(fixtures.updatedCoffee.description);
+        expect(res.body.countryOfOrigin).eql(fixtures.updatedCoffee.countryOfOrigin);
+        expect(res.body.price).eql(fixtures.updatedCoffee.price);
         done();
       })
       .catch((err) => done(err));
@@ -47,51 +50,52 @@ describe('UPDATE users', () => {
   it('update the model persisted in the database', (done) => {
     request(app)
       .put(`/api/v1/coffee/${coffeeModel.id}`)
-      .send(coffeeModel.updatedCoffee)
-      .expect('Content-Type', /json/)
+      .send(fixtures.updatedCoffee)
       .expect(200)
-      .get(`/api/v1/coffee/${coffeeModel.id}`)
-      .then((res) => {
-        res.body.name.eql(fixtures.updatedCoffee.name);
+      .expect((res) => {
+        expect(res.body).to.be.an('object');
+        expect(res.body.name).eql(fixtures.updatedCoffee.name);
+      })
+      .then(() => CoffeeModel.findById(coffeeModel.id))
+      .then((coffee) => {
+        expect(coffee.name).eql(fixtures.updatedCoffee.name);
         done();
       })
       .catch((err) => done(err));
   });
 
   it('should only update the model with matching id', (done) => {
-    before((doneBefore) => {
-      const coffees = [fixtures.normalCoffee, fixtures.secondCoffee, fixtures.thirdCoffee];
-      const persistCoffees = coffees.map((coffee) => new CoffeeModel(coffee).save());
-      Promise.all(persistCoffees).then(doneBefore).catch(doneBefore);
-    });
+    const coffees = [fixtures.secondCoffee, fixtures.thirdCoffee];
+    const persistCoffees = coffees.map((coffee) => new CoffeeModel(coffee).save());
 
-    request(app)
+    Promise.all(persistCoffees).then(() => request(app)
       .put(`/api/v1/coffee/${coffeeModel.id}`)
       .send(fixtures.updatedCoffee)
       .expect('Content-Type', /json/)
       .expect(200)
-      .then(() => CoffeeModel.find({ _id: { $ne: coffeeModel.id } }).exec())
+      .then(() => CoffeeModel.find({ _id: { $ne: coffeeModel.id } }))
       .then((coffeeModels) => {
-        coffeeModels.length.to.eql(2);
+        expect(coffeeModels.length).to.eql(2);
         coffeeModels.forEach((coffee) => {
-          coffee.name.should.not.eql(fixtures.updatedCoffee.name);
+          expect(coffee.name).to.not.eql(fixtures.updatedCoffee.name);
         });
-      })
+        done();
+      }))
       .catch((err) => done(err));
   });
 
   it('should return validation errors', (done) => {
     request(app)
       .put(`/api/v1/coffee/${coffeeModel.id}`)
-      .send(fixtures.freeCoffeeFromNoWhere)
+      .send(fixtures.freeCoffeeFromWrongPlace)
       .expect('Content-Type', /json/)
       .expect(400)
       .then((res) => {
-        expect(res.body.summary).to.be.eql('Coffee validation failed: countryOfOrigin: Path `countryOfOrigin` is required., price: Path `price` is required.');
-        expect(res.body.errors[0].field).to.be.eql('countryOfOrigin');
-        expect(res.body.errors[0].message).to.be.eql('Path `countryOfOrigin` is required.');
-        expect(res.body.errors[1].field).to.be.eql('price');
-        expect(res.body.errors[1].message).to.be.eql('Path `price` is required.');
+        expect(res.body.summary).to.be.eql('Coffee validation failed: price: Path `price` (-1) is less than minimum allowed value (0)., countryOfOrigin: Validator failed for path `countryOfOrigin` with value `down town`');
+        expect(res.body.errors[0].field).to.be.eql('price');
+        expect(res.body.errors[0].message).to.be.eql('Path `price` (-1) is less than minimum allowed value (0).');
+        expect(res.body.errors[1].field).to.be.eql('countryOfOrigin');
+        expect(res.body.errors[1].message).to.be.eql('Validator failed for path `countryOfOrigin` with value `down town`');
         done();
       })
       .catch((err) => done(err));

@@ -32,6 +32,21 @@ function deleteCoffee(req, res, next) {
     .catch((error) => next(error));
 }
 
+function updateCoffee(req, res, next) {
+  Coffee.findById(req.params.id)
+    .then((coffee) => {
+      if (!coffee) return res.status(404).send();
+
+      Object.assign(coffee, req.body);
+
+      req.logger.info(`updated coffee? ${coffee.name} ${req.body.name}`);
+
+      return coffee.save();
+    })
+    .then((coffee) => res.status(200).json(coffee))
+    .catch((error) => next(error));
+}
+
 module.exports = {
-  getCoffee, getCoffees, postCoffee, deleteCoffee,
+  getCoffee, getCoffees, postCoffee, deleteCoffee, updateCoffee,
 };

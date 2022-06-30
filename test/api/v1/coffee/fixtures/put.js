@@ -26,8 +26,10 @@ module.exports = {
   unknownCoffeeId: {
     id: '62b062b1b7039be24ab1a82d',
   },
-  freeCoffeeFromNoWhere: {
+  freeCoffeeFromWrongPlace: {
     name: 'Free coffee',
     description: 'tasty coffee',
+    price: -1,
+    countryOfOrigin: 'down town',
   },
 };

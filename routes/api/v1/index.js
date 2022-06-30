@@ -10,6 +10,7 @@ const throw404 = (req, res) => {
 apiRouter.route('/coffee').get(coffee.getCoffees);
 apiRouter.route('/coffee/:id').get(coffee.getCoffee);
 apiRouter.route('/coffee').post(coffee.postCoffee);
+apiRouter.route('/coffee/:id').put(coffee.updateCoffee);
 apiRouter.route('/coffee/:id').delete(coffee.deleteCoffee);
 apiRouter.route('/coffee').delete(throw404);
 
