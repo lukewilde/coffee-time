@@ -4,7 +4,7 @@ const app = require('../../../app');
 const fixtures = require('./fixtures/put');
 const CoffeeModel = require('../../../../models/coffee');
 
-describe('UPDATE users', () => {
+describe('UPDATE coffee', () => {
   let coffeeModel;
 
   beforeEach((done) => {

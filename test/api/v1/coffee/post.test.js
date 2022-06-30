@@ -5,7 +5,7 @@ const app = require('../../../app');
 const fixtures = require('./fixtures/post');
 const CoffeeModel = require('../../../../models/coffee');
 
-describe('POST users', () => {
+describe('POST coffee', () => {
   beforeEach((done) => {
     CoffeeModel.deleteMany({}, done);
   });
