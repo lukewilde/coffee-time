@@ -62,9 +62,7 @@ describe('GET users', () => {
       request(app)
         .get(`/api/v1/coffee/${fixtures.unknownCoffeeId.id}`)
         .expect(404)
-        .then(() => {
-          done();
-        })
+        .then(() => done())
         .catch((error) => done(error));
     });
 
