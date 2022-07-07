@@ -14,7 +14,6 @@ ENV PORT=${PORT}
 ENV NODE_ENV=${NODE_ENV}
 ENV LOG_LEVEL=debug
 ENV PATH /node/node_modules/.bin:$PATH
-EXPOSE $PORT 9229
 
 COPY --chown=node:node package*.json ./
 
