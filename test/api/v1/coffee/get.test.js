@@ -1,6 +1,6 @@
 const request = require('supertest');
 const { expect } = require('chai');
-const app = require('../../../app');
+const app = require('../../../index');
 const fixtures = require('./fixtures/get');
 const CoffeeModel = require('../../../../models/coffee');
 
