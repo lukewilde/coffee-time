@@ -1,10 +1,10 @@
 const express = require('express');
-// const logger = require('../util/logger');
+const config = require('../../util/config');
 
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  res.send('home page');
+  res.send(`home page ${config.get('env')}`);
 });
 
 module.exports = router;
