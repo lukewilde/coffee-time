@@ -1,8 +1,8 @@
-# coffee-time
+# Coffee Time
 
 A tiny yet overengineered RESTful api to sample a few libraries.
 
-## libraries used
+## libraries Used
 
 * Express
 * Bunyan
@@ -16,9 +16,9 @@ A tiny yet overengineered RESTful api to sample a few libraries.
 
 I've setup rotating logs using Bunyan, configured with multiple logging levels and output streams.
 
-Each inbound request has a child logger attached to it, any logs made using this will automatically record their request id.
+Each inbound request has a child logger attached to it, any logs made using this will automatically record its request id.
 
-Every request has their parameters and responses logged via express middleware.
+Every request has its parameters and responses logged via express middleware.
 
 A good starting point for APM integration.
 
@@ -30,8 +30,8 @@ Convict provides a schema and access method for environment variables.
 
 `utils/config.js`.
 
-### Mongoose error reporting
+### Mongoose Error Reporting
 
-All errors are forwarded to a custom error handler, which detects and formats all mongoose errors consistently.
+All errors are forwarded to a custom error handler, which consistently detects and formats all mongoose errors.
 
 `utils/mongoose-error-hander.js`.
