@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const logger = require('./util/logger');
 const frontEndRoutes = require('./routes/front-end');
 const apiV1Routes = require('./routes/api/v1');
-const config = require('./config/convict');
+const config = require('./util/config');
 const mongooseErrorHandler = require('./util/mongoose-error-hander');
 const logUnhandledErrors = require('./util/log-unhandled-errors');
 

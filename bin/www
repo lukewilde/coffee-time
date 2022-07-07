@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-const config = require('../config/convict');
+const config = require('../util/config');
 const app = require('../index');
 const logger = require('../util/logger');
 

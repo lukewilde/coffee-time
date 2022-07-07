@@ -1,6 +1,6 @@
 const bunyan = require('bunyan');
 const bunyanformat = require('bunyan-format');
-const config = require('../config/convict');
+const config = require('./config');
 
 const formatOut = bunyanformat({ outputMode: 'short' });
 
